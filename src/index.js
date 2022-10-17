@@ -1,8 +1,9 @@
 import { Notify } from 'notiflix';
 import { Report } from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.5.min.css';
-import SimpleLightbox from 'simplelightbox';
+
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import SimpleLightbox from 'simplelightbox';
 import axios from 'axios';
 import './css/styles.css';
 const BASEURL = 'https://pixabay.com/api/';
@@ -53,10 +54,10 @@ function createSmallImgMarkup(arrPhotos) {
       <a class="gallery__link" href="${largeImageURL}">
             <img class="gallery__image" src="${previewURL}" alt="${tags}" />
          </a>
-        //  <p class="gallery__text">Likes ${likes}</p>
-        //  <p class="gallery__text">Views ${views}</p>
-        //  <p class="gallery__text">Comments ${comments}</p>
-        //   <p class="gallery__text">Downloads ${downloads}</p>
+         <p class="gallery__text">Likes ${likes}</p>
+         <p class="gallery__text">Views ${views}</p>
+         <p class="gallery__text">Comments ${comments}</p>
+          <p class="gallery__text">Downloads ${downloads}</p>
     </div>`;
       }
     )

@@ -3,8 +3,9 @@ import { Report } from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.5.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import axios from 'axios';
 import './css/styles.css';
-const baseUrl = 'https://pixabay.com/api/';
+const BASEURL = 'https://pixabay.com/api/';
 const keyApiPix = '30040272-179178153c29e3da83ceec1ea';
 // inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
@@ -21,4 +22,15 @@ function onFormSubmit(evt) {
   fetchPhotos(inputValue);
 }
 
-function fetchPhotos(keyWord) {}
+async function fetchPhotos(keyWord) {
+  try {
+    console.log(BASEURL);
+    console.log(keyWord);
+    const response = await axios.get(
+      `${BASEURL}?key=30040272-179178153c29e3da83ceec1ea&q=${keyWord}&image_type=photo&orientation=horizont&safesearch=true`
+    );
+    console.log(response);
+  } catch (error) {
+    console.error(error);
+  }
+}

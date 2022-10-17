@@ -53,16 +53,18 @@ function createSmallImgMarkup(arrPhotos) {
       <a class="gallery__link" href="${largeImageURL}">
             <img class="gallery__image" src="${previewURL}" alt="${tags}" />
          </a>
-         <p class="gallery__text">Likes ${likes}</p>
-         <p class="gallery__text">Views ${views}</p>
-         <p class="gallery__text">Comments ${comments}</p>
-          <p class="gallery__text">Downloads ${downloads}</p>
+        //  <p class="gallery__text">Likes ${likes}</p>
+        //  <p class="gallery__text">Views ${views}</p>
+        //  <p class="gallery__text">Comments ${comments}</p>
+        //   <p class="gallery__text">Downloads ${downloads}</p>
     </div>`;
       }
     )
     .join('');
 }
-const lightbox = new SimpleLightbox('.gallery__link', {});
+new SimpleLightbox('.gallery a', {
+  /* options */
+});
 // --------------------
 // async function fetchPhotos(keyWord) {
 //   try {

@@ -11,9 +11,9 @@ console.log('ja');
 //   let inputValue = evt.target.value.trim();
 const form = document.querySelector('.search-form');
 form.addEventListener('submit', onFormSubmit);
-
+console.log('ja');
 function onFormSubmit(evt) {
   evt.preventDefault();
-  console.dir(evt.tcurrentTarget);
+  console.dir(evt.currentTarget.elements);
   console.log('ja');
 }

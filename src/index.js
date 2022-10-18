@@ -8,6 +8,15 @@ import axios from 'axios';
 import './css/styles.css';
 const BASEURL = 'https://pixabay.com/api/';
 const keyApiPix = '30040272-179178153c29e3da83ceec1ea';
+
+const optionsObserv = {
+  root: null,
+  rootMargin: '50px',
+  threshold: 1,
+};
+const observer = new IntersectionObserver(onLoad, optionsObserv);
+let page = 1;
+let inputValue = '';
 // inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
 // function onInput(evt) {
@@ -15,6 +24,7 @@ const keyApiPix = '30040272-179178153c29e3da83ceec1ea';
 const refs = {
   formEl: document.querySelector('.search-form'),
   galleryEl: document.querySelector('.gallery'),
+  guardEl: document.querySelector('.guard'),
 };
 refs.formEl.addEventListener('submit', onFormSubmit);
 const notifyOptions = {
@@ -24,7 +34,8 @@ const notifyOptions = {
 };
 function onFormSubmit(evt) {
   evt.preventDefault();
-  let inputValue = evt.target.elements.searchQuery.value.toLowerCase().trim();
+
+  inputValue = evt.target.elements.searchQuery.value.toLowerCase().trim();
 
   fetchPhotos(inputValue)
     .then(response => {
@@ -41,12 +52,13 @@ function onFormSubmit(evt) {
       const imgMarkUp = createSmallImgMarkup(response.data.hits);
       refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
       const lightbox = new SimpleLightbox('.gallery__link');
+      observer.observe(refs.guardEl);
     })
     .catch(error => console.log(error));
 }
 async function fetchPhotos(keyWord) {
   const response = await axios.get(
-    `${BASEURL}?key=${keyApiPix}&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40`
+    `${BASEURL}?key=${keyApiPix}&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=24&page=${page}`
   );
 
   return response;
@@ -88,7 +100,17 @@ function createSmallImgMarkup(arrPhotos) {
     )
     .join('');
 }
-
+function onLoad(entries) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      page += 1;
+      fetchPhotos(inputValue).then(response => {
+        const imgMarkUp = createSmallImgMarkup(response.data.hits);
+        refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
+      });
+    }
+  });
+}
 // -------------------------
 // `<div class="gallery__item">
 //       <a class="gallery__link link" href="${largeImageURL}">

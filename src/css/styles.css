@@ -42,3 +42,40 @@ img {
   max-width: 100%;
   height: auto;
 }
+/* ---------------------- */
+.search-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.search-form input {
+  margin-right: 30px;
+}
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  /* align-items: baseline; */
+  width: 100%;
+  margin: 0 auto;
+}
+.gallery__item {
+  outline: 1px solid green;
+  display: flex;
+  flex-direction: column;
+
+  flex-basis: calc((100% - 30px) / 5);
+}
+.gallery__link {
+  outline: 1px solid red;
+  flex-grow: 1;
+}
+.gallery__image {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}

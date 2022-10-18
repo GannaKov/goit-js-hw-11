@@ -27,6 +27,7 @@ function onFormSubmit(evt) {
       // console.log(response.data.hits);
       const imgMarkUp = createSmallImgMarkup(response.data.hits);
       refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
+      const lightbox = new SimpleLightbox('.gallery__link');
     })
     .catch(error => console.log(error));
 }
@@ -42,7 +43,7 @@ function createSmallImgMarkup(arrPhotos) {
     .map(
       ({
         largeImageURL,
-        previewURL,
+        webformatURL,
         tags,
         likes,
         views,
@@ -52,20 +53,20 @@ function createSmallImgMarkup(arrPhotos) {
         // console.log(photo);
         return `<div class="gallery__item">
       <a class="gallery__link" href="${largeImageURL}">
-            <img class="gallery__image" src="${previewURL}" alt="${tags}" />
+            <img class="gallery__image" src="${webformatURL}" alt="${tags}" />
          </a>
+         <div class="gallery__bottom-blocl>
          <p class="gallery__text">Likes ${likes}</p>
          <p class="gallery__text">Views ${views}</p>
          <p class="gallery__text">Comments ${comments}</p>
           <p class="gallery__text">Downloads ${downloads}</p>
+          </div>
     </div>`;
       }
     )
     .join('');
 }
-new SimpleLightbox('.gallery a', {
-  /* options */
-});
+
 // --------------------
 // async function fetchPhotos(keyWord) {
 //   try {

@@ -52,14 +52,16 @@ function createSmallImgMarkup(arrPhotos) {
       }) => {
         // console.log(photo);
         return `<div class="gallery__item">
-      <a class="gallery__link" href="${largeImageURL}">
+      <a class="gallery__link link" href="${largeImageURL}">
             <img class="gallery__image" src="${webformatURL}" alt="${tags}" />
          </a>
-         <div class="gallery__bottom-blocl>
-         <p class="gallery__text">Likes ${likes}</p>
-         <p class="gallery__text">Views ${views}</p>
-         <p class="gallery__text">Comments ${comments}</p>
-          <p class="gallery__text">Downloads ${downloads}</p>
+         <div class="bottom">
+         <ul class="gallery-bottom__block list">
+         <li class="gallery-bottom__item"><p class="gallery__text">Likes ${likes}</p></li>
+         <li class="gallery-bottom__item"><p class="gallery__text">Views ${views}</p></li>
+         <li class="gallery-bottom__item"><p class="gallery__text">Comments ${comments}</p></li>
+         <li class="gallery-bottom__item"><p class="gallery__text">Downloads ${downloads}</p></li>
+          </ul>
           </div>
     </div>`;
       }

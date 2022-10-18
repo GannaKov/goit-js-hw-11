@@ -79,3 +79,18 @@ img {
   height: 100%;
   width: 100%;
 }
+.bottom {
+  padding: 10 20;
+}
+.gallery-bottom__block {
+  display: flex;
+  column-gap: 10px;
+}
+.gallery-bottom__item {
+  align-items: center;
+}
+.gallery__text {
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}

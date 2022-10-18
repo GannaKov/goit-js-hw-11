@@ -17,14 +17,27 @@ const refs = {
   galleryEl: document.querySelector('.gallery'),
 };
 refs.formEl.addEventListener('submit', onFormSubmit);
-
+const notifyOptions = {
+  // position: 'center-top',
+  showOnlyTheLastOne: true,
+  timeout: 4000,
+};
 function onFormSubmit(evt) {
   evt.preventDefault();
   let inputValue = evt.target.elements.searchQuery.value.toLowerCase().trim();
 
   fetchPhotos(inputValue)
     .then(response => {
-      // console.log(response.data.hits);
+      // console.log(typeof response.data.total);
+      if (response.data.total == 0) {
+        Notify.warning(
+          'Sorry, there are no images matching your search query. Please try again.',
+          notifyOptions
+        );
+
+        return;
+      }
+
       const imgMarkUp = createSmallImgMarkup(response.data.hits);
       refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
       const lightbox = new SimpleLightbox('.gallery__link');
@@ -33,7 +46,7 @@ function onFormSubmit(evt) {
 }
 async function fetchPhotos(keyWord) {
   const response = await axios.get(
-    `${BASEURL}?key=${keyApiPix}&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true`
+    `${BASEURL}?key=${keyApiPix}&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40`
   );
 
   return response;

@@ -8,7 +8,7 @@ import axios from 'axios';
 import './css/styles.css';
 const BASEURL = 'https://pixabay.com/api/';
 const keyApiPix = '30040272-179178153c29e3da83ceec1ea';
-
+const lightbox = new SimpleLightbox('.gallery__link');
 const optionsObserv = {
   root: null,
   rootMargin: '50px',
@@ -19,7 +19,7 @@ let page = 1;
 let perPage = 30;
 let inputValue = '';
 // inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
-const lightbox = new SimpleLightbox('.gallery__link');
+
 // function onInput(evt) {
 //https://pixabay.com/api/?key=30040272-179178153c29e3da83ceec1ea&q=cat&image_type=photo&orientation=horizont&safesearch=true
 const refs = {
@@ -56,9 +56,8 @@ function onFormSubmit(evt) {
       Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
       const imgMarkUp = createSmallImgMarkup(response.data.hits);
       refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
-      // const lightbox = new SimpleLightbox('.gallery__link');
-      // lightBox();
-      lightbox.open();
+
+      lightbox.refresh();
       observer.observe(refs.guardEl);
     })
     .catch(error => console.log(error));

@@ -43,8 +43,13 @@ img {
   height: auto;
 }
 /* ---------------------- */
-body {
+/* body {
   overflow-y: scroll;
+} */
+html {
+  overflow: auto;
+  margin-left: calc(100vw - 100%);
+  margin-right: 0;
 }
 .search-form {
   padding-top: 10px;
@@ -52,7 +57,7 @@ body {
   background-color: rgba(255, 0, 170, 1);
   top: 0px;
   position: fixed;
-  width: 100%;
+  width: 100vw;
   display: flex;
   justify-content: center;
   margin-bottom: 30px;

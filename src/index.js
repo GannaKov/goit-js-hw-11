@@ -53,6 +53,7 @@ function onFormSubmit(evt) {
         return;
       }
 
+      Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
       const imgMarkUp = createSmallImgMarkup(response.data.hits);
       refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
       // const lightbox = new SimpleLightbox('.gallery__link');

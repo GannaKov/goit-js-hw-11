@@ -58,6 +58,7 @@ function onFormSubmit(evt) {
       refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
       // const lightbox = new SimpleLightbox('.gallery__link');
       // lightBox();
+      lightbox.open();
       observer.observe(refs.guardEl);
     })
     .catch(error => console.log(error));

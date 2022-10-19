@@ -46,10 +46,11 @@ function onFormSubmit(evt) {
   }
   fetchPhotos(inputValue)
     .then(response => {
+      console.log(response);
       refs.galleryEl.innerHTML = '';
       page = 1;
-
-      if (response.data.total == 0) {
+      console.log(response.data.hits.length);
+      if (response.data.total === 0) {
         refs.galleryEl.innerHTML = '';
         // Notify.warning(
         //   'Sorry, there are no images matching your search query. Please try again.',

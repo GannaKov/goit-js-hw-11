@@ -16,6 +16,7 @@ const optionsObserv = {
 };
 const observer = new IntersectionObserver(onLoad, optionsObserv);
 let page = 1;
+let perPage = 30;
 let inputValue = '';
 // inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 const lightbox = new SimpleLightbox('.gallery__link');
@@ -27,8 +28,8 @@ const refs = {
   guardEl: document.querySelector('.guard'),
 };
 refs.formEl.addEventListener('submit', onFormSubmit);
-const notifyOptions = {
-  // position: 'center-top',
+const optionsNotify = {
+  position: 'center-center',
   showOnlyTheLastOne: true,
   timeout: 4000,
 };
@@ -36,14 +37,17 @@ function onFormSubmit(evt) {
   evt.preventDefault();
 
   inputValue = evt.target.elements.searchQuery.value.toLowerCase().trim();
-
+  if (inputValue === '') {
+    Notify.failure('Please fill in the search field!', optionsNotify);
+    return;
+  }
   fetchPhotos(inputValue)
     .then(response => {
       // console.log(typeof response.data.total);
       if (response.data.total == 0) {
         Notify.warning(
           'Sorry, there are no images matching your search query. Please try again.',
-          notifyOptions
+          optionsNotify
         );
 
         return;
@@ -59,7 +63,7 @@ function onFormSubmit(evt) {
 }
 async function fetchPhotos(keyWord) {
   const response = await axios.get(
-    `${BASEURL}?key=${keyApiPix}&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=24&page=${page}`
+    `${BASEURL}?key=${keyApiPix}&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${perPage}&page=${page}`
   );
 
   return response;
@@ -103,6 +107,15 @@ function onLoad(entries) {
     if (entry.isIntersecting) {
       page += 1;
       fetchPhotos(inputValue).then(response => {
+        console.log(page, Math.ceil(response.data.totalHits / perPage));
+        if (page > Math.ceil(response.data.totalHits / perPage)) {
+          Notify.warning(
+            'We are sorry, but you have reached the end of search results.',
+            optionsNotify
+          );
+
+          return;
+        }
         const imgMarkUp = createSmallImgMarkup(response.data.hits);
         refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
         lightbox.refresh();

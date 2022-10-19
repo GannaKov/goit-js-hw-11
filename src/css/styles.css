@@ -70,6 +70,7 @@ html {
 }
 .gallery {
   display: flex;
+  width: 100vw;
   margin-top: 42px;
   flex-wrap: wrap;
   gap: 20px;
@@ -78,13 +79,11 @@ html {
   /* width: 100%; */
 }
 .photo-card {
-  outline: 1px solid green;
   display: flex;
   flex-direction: column;
   flex-basis: calc((100% - 80px) / 5);
 }
 .gallery__link {
-  outline: 1px solid red;
   flex-grow: 1;
 }
 .photo-card img {

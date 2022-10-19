@@ -59,7 +59,7 @@ function onFormSubmit(evt) {
 }
 async function fetchPhotos(keyWord) {
   const response = await axios.get(
-    `${BASEURL}?key=${keyApiPix}&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=8&page=${page}`
+    `${BASEURL}?key=${keyApiPix}&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=24&page=${page}`
   );
 
   return response;
@@ -76,12 +76,9 @@ function createSmallImgMarkup(arrPhotos) {
         comments,
         downloads,
       }) => {
-        // console.log(photo);
-        return `
-        <div class="photo-card">
+        return `<div class="photo-card">
         <a class="gallery__link link" href="${largeImageURL}">
-    <img src="${webformatURL}" alt="${tags} loading="lazy" />
-<a/>
+    <img src="${webformatURL}" alt="${tags} loading="lazy" /><a/>
     <div class="info">
       <p class="info-item">
         <b>Likes ${likes}</b>

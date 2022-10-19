@@ -18,7 +18,7 @@ const observer = new IntersectionObserver(onLoad, optionsObserv);
 let page = 1;
 let inputValue = '';
 // inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
-
+const lightbox = new SimpleLightbox('.gallery__link');
 // function onInput(evt) {
 //https://pixabay.com/api/?key=30040272-179178153c29e3da83ceec1ea&q=cat&image_type=photo&orientation=horizont&safesearch=true
 const refs = {
@@ -51,14 +51,15 @@ function onFormSubmit(evt) {
 
       const imgMarkUp = createSmallImgMarkup(response.data.hits);
       refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
-      const lightbox = new SimpleLightbox('.gallery__link');
+      // const lightbox = new SimpleLightbox('.gallery__link');
+      // lightBox();
       observer.observe(refs.guardEl);
     })
     .catch(error => console.log(error));
 }
 async function fetchPhotos(keyWord) {
   const response = await axios.get(
-    `${BASEURL}?key=${keyApiPix}&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=24&page=${page}`
+    `${BASEURL}?key=${keyApiPix}&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=8&page=${page}`
   );
 
   return response;
@@ -107,10 +108,14 @@ function onLoad(entries) {
       fetchPhotos(inputValue).then(response => {
         const imgMarkUp = createSmallImgMarkup(response.data.hits);
         refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
+        lightbox.refresh();
       });
     }
   });
 }
+// function lightBox() {
+//   const lightbox = new SimpleLightbox('.gallery__link');
+// }
 // -------------------------
 // `<div class="gallery__item">
 //       <a class="gallery__link link" href="${largeImageURL}">

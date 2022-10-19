@@ -61,7 +61,6 @@ img {
   justify-content: center;
   /* align-items: baseline; */
   /* width: 100%; */
-  margin: 0 auto;
 }
 .photo-card {
   outline: 1px solid green;
@@ -82,6 +81,8 @@ img {
   /* padding: 10 20; */
   display: flex;
   column-gap: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .info-item {
   font-size: 12px;

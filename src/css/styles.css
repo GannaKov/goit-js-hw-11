@@ -43,11 +43,20 @@ img {
   height: auto;
 }
 /* ---------------------- */
+body {
+  overflow-y: scroll;
+}
 .search-form {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: rgba(255, 0, 170, 1);
+  top: 0px;
+  position: fixed;
+  width: 100%;
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
-  margin-top: 20px;
+
   margin-left: auto;
   margin-right: auto;
 }
@@ -56,6 +65,7 @@ img {
 }
 .gallery {
   display: flex;
+  margin-top: 42px;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;

@@ -43,8 +43,11 @@ function onFormSubmit(evt) {
   }
   fetchPhotos(inputValue)
     .then(response => {
+      refs.galleryEl.innerHTML = '';
+      page = 1;
       // console.log(typeof response.data.total);
       if (response.data.total == 0) {
+        refs.galleryEl.innerHTML = '';
         Notify.warning(
           'Sorry, there are no images matching your search query. Please try again.',
           optionsNotify
@@ -114,7 +117,7 @@ function onLoad(entries) {
             'We are sorry, but you have reached the end of search results.',
             optionsNotify
           );
-
+          page = 1;
           return;
         }
         const imgMarkUp = createSmallImgMarkup(response.data.hits);

@@ -13,13 +13,15 @@ const lightbox = new SimpleLightbox('.gallery__link');
 // -------------------
 const optionsObserv = {
   root: null,
-  rootMargin: '50px',
+  rootMargin: '30px',
   threshold: 1,
 };
 
 const observer = new IntersectionObserver(onLoad, optionsObserv);
-let page = 1;
+let page;
 let perPage = 30;
+let totalPage;
+let totalHitsPhotos;
 let inputValue = '';
 
 const optionsNotify = {
@@ -37,6 +39,9 @@ refs.formEl.addEventListener('submit', onFormSubmit);
 
 function onFormSubmit(evt) {
   evt.preventDefault();
+  cleanRender(refs.galleryEl);
+  page = 1;
+  console.log('1', page);
   inputValue = evt.target.elements.searchQuery.value.toLowerCase().trim();
   if (inputValue === '') {
     Report.info('Please', 'Fill in the search field!', 'Okay', {
@@ -44,12 +49,10 @@ function onFormSubmit(evt) {
     });
     return;
   }
+
   fetchPhotos(inputValue, perPage, page)
     .then(response => {
-      console.log(response);
       cleanRender(refs.galleryEl);
-      page = 1;
-      console.log(response.data.hits.length);
       if (response.data.total === 0) {
         cleanRender(refs.galleryEl);
         Report.warning(
@@ -62,11 +65,11 @@ function onFormSubmit(evt) {
         );
         return;
       }
-
+      totalPage = Math.ceil(response.data.totalHits / perPage);
+      totalHitsPhotos = response.data.totalHits;
       Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
       const imgMarkUp = createSmallImgMarkup(response.data.hits);
       refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
-
       lightbox.refresh();
       observer.observe(refs.guardEl);
     })
@@ -74,25 +77,25 @@ function onFormSubmit(evt) {
 }
 
 function onLoad(entries) {
+  if (inputValue === '') {
+    return;
+  }
+
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       page += 1;
       fetchPhotos(inputValue, perPage, page).then(response => {
-        if (
-          response.data.totalHits > 0 &&
-          page > Math.ceil(response.data.totalHits / perPage)
-        ) {
-          Notify.warning(
-            'We are sorry, but you have reached the end of search results.',
-            optionsNotify
-          );
-          return;
-        }
         const imgMarkUp = createSmallImgMarkup(response.data.hits);
         refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
         lightbox.refresh();
       });
-      // .catch(error => console.log(error));
     }
   });
+  if (totalHitsPhotos > 0 && page > totalPage) {
+    Notify.warning(
+      'We are sorry, but you have reached the end of search results.',
+      optionsNotify
+    );
+    return;
+  }
 }

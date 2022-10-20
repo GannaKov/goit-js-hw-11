@@ -41,7 +41,7 @@ function onFormSubmit(evt) {
   evt.preventDefault();
   cleanRender(refs.galleryEl);
   page = 1;
-  console.log('1', page);
+
   inputValue = evt.target.elements.searchQuery.value.toLowerCase().trim();
   if (inputValue === '') {
     Report.info('Please', 'Fill in the search field!', 'Okay', {
@@ -57,7 +57,7 @@ function onFormSubmit(evt) {
         cleanRender(refs.galleryEl);
         Report.warning(
           'Sorry',
-          'there are no images matching your search query. Please try again.',
+          'There are no images matching your search query. Please try again.',
           'Okay',
           {
             backOverlayClickToClose: true,

@@ -1,13 +1,12 @@
 import { Notify } from 'notiflix';
 import { Report } from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.5.min.css';
-
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import SimpleLightbox from 'simplelightbox';
-import axios from 'axios';
+import fetchPhotos from './customFunction/fetchPhotos';
+import createSmallImgMarkup from './customFunction/funcrionRender';
 import './css/styles.css';
-const BASEURL = 'https://pixabay.com/api/';
-const keyApiPix = '30040272-179178153c29e3da83ceec1ea';
+
 const lightbox = new SimpleLightbox('.gallery__link');
 const optionsObserv = {
   root: null,
@@ -44,7 +43,7 @@ function onFormSubmit(evt) {
     });
     return;
   }
-  fetchPhotos(inputValue)
+  fetchPhotos(inputValue, perPage, page)
     .then(response => {
       console.log(response);
       refs.galleryEl.innerHTML = '';
@@ -76,52 +75,12 @@ function onFormSubmit(evt) {
     })
     .catch(error => console.log(error));
 }
-async function fetchPhotos(keyWord) {
-  const response = await axios.get(
-    `${BASEURL}?key=${keyApiPix}&q=${keyWord}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${perPage}&page=${page}`
-  );
 
-  return response;
-}
-function createSmallImgMarkup(arrPhotos) {
-  return arrPhotos
-    .map(
-      ({
-        largeImageURL,
-        webformatURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) => {
-        return `<div class="photo-card">
-        <a class="gallery__link link" href="${largeImageURL}">
-    <img src="${webformatURL}" alt="${tags} loading="lazy" /><a/>
-    <div class="info">
-      <p class="info-item">
-        <b>Likes ${likes}</b>
-      </p>
-      <p class="info-item">
-        <b>Views ${views}</b>
-      </p>
-      <p class="info-item">
-        <b>Comments ${comments}</b>
-      </p>
-      <p class="info-item">
-        <b>Downloads ${downloads}</b>
-      </p>
-    </div>
-  </div>`;
-      }
-    )
-    .join('');
-}
 function onLoad(entries) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       page += 1;
-      fetchPhotos(inputValue).then(response => {
+      fetchPhotos(inputValue, perPage, page).then(response => {
         console.log('page', page);
         console.log('2', response.data.totalHits / perPage);
         console.log('3', Math.ceil(response.data.totalHits / perPage));

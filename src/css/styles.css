@@ -115,13 +115,14 @@ html {
   display: flex;
   flex-direction: column;
   flex-basis: calc((100% - 80px) / 5);
+  height: 330px;
 }
 .gallery__link {
   flex-grow: 1;
 }
 .photo-card img {
   object-fit: cover;
-  height: 100%;
+  height: 274px;
   width: 100%;
 }
 .info {

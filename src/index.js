@@ -9,8 +9,10 @@ import cleanRender from './customFunction/functionCleanRender';
 import './css/styles.css';
 
 const lightbox = new SimpleLightbox('.gallery__link');
+// -----------------
 
 // -------------------
+
 const optionsObserv = {
   root: null,
   rootMargin: '30px',
@@ -19,7 +21,7 @@ const optionsObserv = {
 
 const observer = new IntersectionObserver(onLoad, optionsObserv);
 let page;
-let perPage = 30;
+let perPage = 40;
 let totalPage;
 let totalHitsPhotos;
 let inputValue = '';
@@ -70,6 +72,12 @@ function onFormSubmit(evt) {
       Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
       const imgMarkUp = createSmallImgMarkup(response.data.hits);
       refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
+      console.log(
+        document
+          .querySelector('.gallery')
+          .firstElementChild.getBoundingClientRect()
+      );
+
       lightbox.refresh();
       observer.observe(refs.guardEl);
     })
@@ -87,6 +95,15 @@ function onLoad(entries) {
       fetchPhotos(inputValue, perPage, page).then(response => {
         const imgMarkUp = createSmallImgMarkup(response.data.hits);
         refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
+        // //*********************************
+        // const { height: cardHeight } = document
+        //   .querySelector('.gallery')
+        //   .firstElementChild.getBoundingClientRect();
+        // window.scrollBy({
+        //   top: cardHeight * 2,
+        //   behavior: 'smooth',
+        // });
+        //*************************************
         lightbox.refresh();
       });
     }
@@ -99,3 +116,12 @@ function onLoad(entries) {
     return;
   }
 }
+// //*********************************
+// const { height: cardHeight } = document
+//   .querySelector('.gallery')
+//   .firstElementChild.getBoundingClientRect();
+// window.scrollBy({
+//   top: cardHeight * 2,
+//   behavior: 'smooth',
+// });
+// //*************************************

@@ -69,6 +69,7 @@ function onFormSubmit(evt) {
       }
       totalPage = Math.ceil(response.data.totalHits / perPage);
       totalHitsPhotos = response.data.totalHits;
+      window.scrollTo(top);
       Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
       const imgMarkUp = createSmallImgMarkup(response.data.hits);
       refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);

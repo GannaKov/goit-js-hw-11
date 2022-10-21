@@ -44,7 +44,7 @@ function onFormSubmit(evt) {
   // window.scrollBy({
   //   behavior: 'auto',
   // });
-  // window.scrollTo(top);
+  window.scrollTo(top);
   page = 1;
 
   inputValue = evt.target.elements.searchQuery.value.toLowerCase().trim();

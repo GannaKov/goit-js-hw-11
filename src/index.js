@@ -41,11 +41,16 @@ refs.formEl.addEventListener('submit', onFormSubmit);
 
 function onFormSubmit(evt) {
   evt.preventDefault();
-  cleanRender(refs.galleryEl);
+  window.scrollBy({
+    behavior: 'auto',
+  });
+  window.scrollTo(top);
+  // cleanRender(refs.galleryEl);
   page = 1;
 
   inputValue = evt.target.elements.searchQuery.value.toLowerCase().trim();
   if (inputValue === '') {
+    cleanRender(refs.galleryEl);
     Report.info('Please', 'Fill in the search field!', 'Okay', {
       backOverlayClickToClose: true,
     });
@@ -56,7 +61,7 @@ function onFormSubmit(evt) {
     .then(response => {
       cleanRender(refs.galleryEl);
       if (response.data.total === 0) {
-        cleanRender(refs.galleryEl);
+        // cleanRender(refs.galleryEl);
         Report.warning(
           'Sorry',
           'There are no images matching your search query. Please try again.',
@@ -67,13 +72,14 @@ function onFormSubmit(evt) {
         );
         return;
       }
+      // window.scrollTo(top);
       totalPage = Math.ceil(response.data.totalHits / perPage);
       totalHitsPhotos = response.data.totalHits;
 
       Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
       const imgMarkUp = createSmallImgMarkup(response.data.hits);
       refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
-      window.scrollTo(top);
+
       lightbox.refresh();
       observer.observe(refs.guardEl);
     })
@@ -99,13 +105,12 @@ function onLoad(entries) {
         const imgMarkUp = createSmallImgMarkup(response.data.hits);
         refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
         // //*********************************
-        // const { height: cardHeight } = document
-        //   .querySelector('.gallery')
-        //   .firstElementChild.getBoundingClientRect();
-        // window.scrollBy({
-        //   top: cardHeight * 2,
-        //   behavior: 'smooth',
-        // });
+        const { height: cardHeight } =
+          refs.galleryEl.firstElementChild.getBoundingClientRect();
+        window.scrollBy({
+          top: cardHeight * 2,
+          behavior: 'smooth',
+        });
         //*************************************
         lightbox.refresh();
       });

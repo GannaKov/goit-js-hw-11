@@ -69,16 +69,11 @@ function onFormSubmit(evt) {
       }
       totalPage = Math.ceil(response.data.totalHits / perPage);
       totalHitsPhotos = response.data.totalHits;
-      window.scrollTo(top);
+
       Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
       const imgMarkUp = createSmallImgMarkup(response.data.hits);
       refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
-      console.log(
-        document
-          .querySelector('.gallery')
-          .firstElementChild.getBoundingClientRect()
-      );
-
+      window.scrollTo(top);
       lightbox.refresh();
       observer.observe(refs.guardEl);
     })
@@ -92,6 +87,14 @@ function onLoad(entries) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       page += 1;
+      if (totalHitsPhotos > 0 && page > totalPage) {
+        Notify.warning(
+          'We are sorry, but you have reached the end of search results.',
+          optionsNotify
+        );
+        observer.unobserve(refs.guardEl);
+        return;
+      }
       fetchPhotos(inputValue, perPage, page).then(response => {
         const imgMarkUp = createSmallImgMarkup(response.data.hits);
         refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
@@ -108,14 +111,6 @@ function onLoad(entries) {
       });
     }
   });
-  if (totalHitsPhotos > 0 && page === totalPage) {
-    Notify.warning(
-      'We are sorry, but you have reached the end of search results.',
-      optionsNotify
-    );
-    observer.unobserve(refs.guardEl);
-    return;
-  }
 }
 // //*********************************
 // const { height: cardHeight } = document

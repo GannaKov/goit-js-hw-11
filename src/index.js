@@ -41,11 +41,10 @@ refs.formEl.addEventListener('submit', onFormSubmit);
 
 function onFormSubmit(evt) {
   evt.preventDefault();
-  window.scrollBy({
-    behavior: 'auto',
-  });
+  // window.scrollBy({
+  //   behavior: 'auto',
+  // });
   window.scrollTo(top);
-  // cleanRender(refs.galleryEl);
   page = 1;
 
   inputValue = evt.target.elements.searchQuery.value.toLowerCase().trim();
@@ -61,7 +60,6 @@ function onFormSubmit(evt) {
     .then(response => {
       cleanRender(refs.galleryEl);
       if (response.data.total === 0) {
-        // cleanRender(refs.galleryEl);
         Report.warning(
           'Sorry',
           'There are no images matching your search query. Please try again.',
@@ -72,7 +70,6 @@ function onFormSubmit(evt) {
         );
         return;
       }
-      // window.scrollTo(top);
       totalPage = Math.ceil(response.data.totalHits / perPage);
       totalHitsPhotos = response.data.totalHits;
 
@@ -119,12 +116,3 @@ function onLoad(entries) {
     }
   });
 }
-// //*********************************
-// const { height: cardHeight } = document
-//   .querySelector('.gallery')
-//   .firstElementChild.getBoundingClientRect();
-// window.scrollBy({
-//   top: cardHeight * 2,
-//   behavior: 'smooth',
-// });
-// //*************************************

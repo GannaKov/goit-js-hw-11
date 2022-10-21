@@ -12,7 +12,7 @@ export default function createSmallImgMarkup(arrPhotos) {
       }) => {
         return `<div class="photo-card">
         <a class="gallery__link link" href="${largeImageURL}">
-    <img src="${webformatURL}" alt="${tags} loading="lazy" /><a/>
+    <img src="${webformatURL}" alt="${tags} loading="lazy" /></a>
     <div class="info">
       <p class="info-item">
         <b>Likes ${likes}</b>
@@ -27,7 +27,8 @@ export default function createSmallImgMarkup(arrPhotos) {
         <b>Downloads ${downloads}</b>
       </p>
     </div>
-  </div>`;
+  </div>
+  `;
       }
     )
     .join('');

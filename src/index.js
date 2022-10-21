@@ -88,7 +88,6 @@ function onLoad(entries) {
   if (inputValue === '') {
     return;
   }
-
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       page += 1;
@@ -113,6 +112,7 @@ function onLoad(entries) {
       'We are sorry, but you have reached the end of search results.',
       optionsNotify
     );
+    observer.unobserve(guard);
     return;
   }
 }

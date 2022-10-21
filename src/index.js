@@ -107,7 +107,7 @@ function onLoad(entries) {
       });
     }
   });
-  if (totalHitsPhotos > 0 && page > totalPage) {
+  if (totalHitsPhotos > 0 && page === totalPage) {
     Notify.warning(
       'We are sorry, but you have reached the end of search results.',
       optionsNotify

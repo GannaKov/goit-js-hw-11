@@ -76,7 +76,9 @@ function onFormSubmit(evt) {
       totalPage = Math.ceil(response.data.totalHits / perPage);
       totalHitsPhotos = response.data.totalHits;
 
-      Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
+      Notify.success(`Hooray! We found ${response.data.totalHits} images.`, {
+        showOnlyTheLastOne: true,
+      });
       const imgMarkUp = createSmallImgMarkup(response.data.hits);
       refs.galleryEl.insertAdjacentHTML('beforeend', imgMarkUp);
 

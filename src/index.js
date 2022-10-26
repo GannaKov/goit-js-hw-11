@@ -8,7 +8,7 @@ import createSmallImgMarkup from './customFunction/funcrionRender';
 import cleanRender from './customFunction/functionCleanRender';
 import './css/styles.css';
 
-const lightbox = new SimpleLightbox('.gallery__link');
+const lightbox = new SimpleLightbox('.gallery__link', { showCounter: false });
 // -----------------
 
 // -------------------
